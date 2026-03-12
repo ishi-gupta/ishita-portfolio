@@ -420,7 +420,21 @@ footer { background: var(--ink); color: var(--cream); padding: 72px 56px; displa
   <div class="inner">
     <div class="sec-label" style="color:var(--gold);">03 — Events</div>
     <h2 class="sec-title" style="color:var(--cream);">Everyone<br>is a<br><em style="font-style:italic;color:var(--gold);">developer.</em></h2>
-    <p class="sec-sub" style="color:rgba(245,240,232,0.55);">The summer before Snowflake, I went to Shanghai and fell in love with an artist. We spent three months talking about capitalism, craft, and why people choose to make things. He was frightened of AI — and he couldn't see that code, which I think of as my medium, could be a craft too. Until I showed him. Watching him use AI to write his first grant application was one of the most beautiful things I've witnessed.<br><br>That conversation was the first of many. My parents. Friends' parents. A woman I met in France who ran a functional medicine practice. Each of them trying to understand tools that are reshaping the world around them. None of them developers. All of them needing a way in.<br><br>Ars Machina started as a project to bring art and machines together. Now the idea is bigger: put filmmakers, educators, engineers, grandmothers in the same room, and redefine who has the power to build. The goal is community, yes — but more than that, it's expanding who gets to be a developer. Showing a new population of builders that these tools aren't frightening. They're a wave. There's enough of it for everyone to surf.</p>
+    <p class="sec-sub" style="color:rgba(245,240,232,0.55);">From Parisian grandmas, divinity PhDs, and rockstars from Lyon — how a one night stand in Shanghai led me to creating global events and teaching the most unexpected people to build with AI.</p>
+
+    <button onclick="var d=document.getElementById('events-story');var b=this;if(d.style.display==='none'){d.style.display='block';b.textContent='Hide story ↑'}else{d.style.display='none';b.textContent='Read the story ↓'}"
+      style="margin-bottom:40px;background:none;border:1px solid rgba(200,150,62,0.4);color:var(--gold);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;padding:8px 16px;cursor:pointer;transition:background 0.2s;"
+      onmouseover="this.style.background='rgba(200,150,62,0.08)'" onmouseout="this.style.background='none'">
+      Read the story ↓
+    </button>
+
+    <div id="events-story" style="display:none;max-width:660px;margin-bottom:48px;">
+      <p style="font-size:14px;color:rgba(245,240,232,0.55);line-height:1.9;">
+        The summer before Snowflake, I went to Shanghai and fell in love with an artist. We spent three months talking about capitalism, craft, and why people choose to make things. He was frightened of AI — and he couldn't see that code, which I think of as my medium, could be a craft too. Until I showed him. Watching him use AI to write his first grant application was one of the most beautiful things I've witnessed.<br><br>
+        That conversation was the first of many. My parents. Friends' parents. A woman I met in France who ran a functional medicine practice. Each of them trying to understand tools that are reshaping the world around them. None of them developers. All of them needing a way in.<br><br>
+        Ars Machina started as a project to bring art and machines together. Now the idea is bigger: put filmmakers, educators, engineers, grandmothers in the same room, and redefine who has the power to build. The goal is community, yes — but more than that, it's expanding who gets to be a developer. Showing a new population of builders that these tools aren't frightening. They're a wave. There's enough of it for everyone to surf.
+      </p>
+    </div>
 
     <div style="border:1px solid rgba(255,255,255,0.08);padding:40px;">
 
