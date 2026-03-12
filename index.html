@@ -167,6 +167,7 @@ header { display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh; }
   background: var(--cream); border: 1px solid var(--border);
   cursor: pointer; transition: background 0.2s, border-color 0.2s;
   display: flex; flex-direction: column; gap: 8px;
+  text-decoration: none; color: inherit;
 }
 .guide-card:hover { background: var(--warm); border-color: var(--red); }
 .guide-card-num { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); }
@@ -660,36 +661,36 @@ footer { background: var(--ink); color: var(--cream); padding: 72px 56px; displa
       </div>
       <div style="padding:24px 32px;background:var(--ink);">
         <div class="guide-strip">
-          <div class="guide-card" onclick="openGuide('guide-01-meet-your-gpio-pins.pdf')">
+          <a class="guide-card" href="guide-01-meet-your-gpio-pins.pdf" target="_blank" rel="noopener">
             <div class="guide-card-num">Guide 01</div>
             <div class="guide-card-title">Meet Your GPIO Pins</div>
             <div class="guide-card-sub">MangoPi · Hardware</div>
             <div class="guide-card-arrow">Read →</div>
-          </div>
-          <div class="guide-card" onclick="openGuide('guide-02-program-your-gpio-pins.pdf')">
+          </a>
+          <a class="guide-card" href="guide-02-program-your-gpio-pins.pdf" target="_blank" rel="noopener">
             <div class="guide-card-num">Guide 02</div>
             <div class="guide-card-title">Program Your GPIO Pins</div>
             <div class="guide-card-sub">MangoPi · C</div>
             <div class="guide-card-arrow">Read →</div>
-          </div>
-          <div class="guide-card" onclick="openGuide('guide-03-heap-allocator.pdf')">
+          </a>
+          <a class="guide-card" href="guide-03-heap-allocator.pdf" target="_blank" rel="noopener">
             <div class="guide-card-num">Guide 03</div>
             <div class="guide-card-title">Heap Allocator</div>
             <div class="guide-card-sub">Memory · malloc</div>
             <div class="guide-card-arrow">Read →</div>
-          </div>
-          <div class="guide-card" onclick="openGuide('guide-04-page-tables.pdf')">
+          </a>
+          <a class="guide-card" href="guide-04-page-tables.pdf" target="_blank" rel="noopener">
             <div class="guide-card-num">Guide 04</div>
             <div class="guide-card-title">Page Tables</div>
             <div class="guide-card-sub">Virtual Memory</div>
             <div class="guide-card-arrow">Read →</div>
-          </div>
-          <div class="guide-card" onclick="openGuide('guide-05-tlb.pdf')">
+          </a>
+          <a class="guide-card" href="guide-05-tlb.pdf" target="_blank" rel="noopener">
             <div class="guide-card-num">Guide 05</div>
             <div class="guide-card-title">TLB</div>
             <div class="guide-card-sub">Virtual Memory</div>
             <div class="guide-card-arrow">Read →</div>
-          </div>
+          </a>
         </div>
       </div>
     </div>
