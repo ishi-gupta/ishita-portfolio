@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ishita Gupta</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Mono:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink:    #0f0e0c;
+  --cream:  #f5f0e8;
+  --warm:   #ede5d4;
+  --red:    #c9341a;
+  --gold:   #c8963e;
+  --muted:  #6b6560;
+  --border: #d8cfc0;
+  --dark:   #0f0e0c;
+}
+
+html { scroll-behavior: smooth; }
+body { background: var(--cream); color: var(--ink); font-family: 'DM Sans', sans-serif; font-weight: 300; overflow-x: hidden; }
+
+/* noise */
+body::after {
+  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 999; opacity: 0.35;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+}
+
+/* ── TYPOGRAPHY ── */
+.mono { font-family: 'DM Mono', monospace; }
+.serif { font-family: 'Playfair Display', serif; }
+
+.tag {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.22em; text-transform: uppercase;
+}
+
+/* ── LAYOUT ── */
+.inner { max-width: 1200px; margin: 0 auto; padding: 0 56px; }
+section { padding: 88px 0; }
+
+.sec-label {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--red); margin-bottom: 12px;
+  display: flex; align-items: center; gap: 14px;
+}
+.sec-label::after { content: ''; width: 40px; height: 1px; background: var(--red); opacity: 0.4; }
+
+.sec-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(32px, 4.5vw, 56px);
+  font-weight: 900; line-height: 1.02; letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+
+.sec-sub {
+  font-size: 15px; color: var(--muted);
+  max-width: 480px; line-height: 1.8; margin-bottom: 52px;
+}
+
+.divider { width: 100%; height: 1px; background: linear-gradient(90deg, var(--border), transparent); }
+.divider-dark { width: 100%; height: 1px; background: linear-gradient(90deg, rgba(255,255,255,0.08), transparent); }
+
+/* ── CARDS ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border); border: 1px solid var(--border); }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; background: var(--border); border: 1px solid var(--border); }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; background: var(--border); border: 1px solid var(--border); }
+.grid-2-dark { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.07); }
+.grid-3-dark { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.07); }
+.grid-4-dark { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.07); }
+
+.card { background: var(--cream); padding: 40px; transition: background 0.25s; }
+.card:hover { background: var(--warm); }
+.card.warm { background: var(--warm); }
+.card.warm:hover { background: #e5d9c4; }
+.card-dark { background: var(--ink); padding: 40px; transition: background 0.25s; }
+.card-dark:hover { background: #161513; }
+.card.span2 { grid-column: span 2; }
+.card-dark.span2 { grid-column: span 2; }
+.card.span3 { grid-column: span 3; }
+
+.card-tag { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); margin-bottom: 12px; }
+.card-tag-gold { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+.card-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; line-height: 1.2; margin-bottom: 8px; }
+.card-title-lg { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 900; line-height: 1.1; margin-bottom: 8px; }
+.card-meta { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+.card-meta-dark { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(245,240,232,0.3); margin-bottom: 12px; }
+.card-desc { font-size: 13px; color: var(--muted); line-height: 1.75; }
+.card-desc-dark { font-size: 13px; color: rgba(245,240,232,0.5); line-height: 1.75; }
+.card-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 18px; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red); text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 2px; transition: opacity 0.2s; }
+.card-link:hover { opacity: 0.6; }
+.card-link-gold { display: inline-flex; align-items: center; gap: 6px; margin-top: 18px; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 2px; transition: opacity 0.2s; }
+.card-link-gold:hover { opacity: 0.6; }
+
+/* ── NAV ── */
+nav { display: flex; gap: 28px; flex-wrap: wrap; }
+nav a { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+nav a:hover { color: var(--red); }
+
+/* ── HEADER ── */
+header { display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh; }
+
+.h-left { padding: 64px 56px; display: flex; flex-direction: column; justify-content: space-between; border-right: 1px solid var(--border); }
+
+.h-right { background: var(--ink); padding: 64px 56px; display: flex; flex-direction: column; justify-content: flex-end; position: relative; overflow: hidden; }
+
+.h-right::before {
+  content: 'LEARN';
+  position: absolute; bottom: -48px; right: -24px;
+  font-family: 'Playfair Display', serif; font-size: 220px; font-weight: 900;
+  color: rgba(255,255,255,0.025); line-height: 1; pointer-events: none;
+  letter-spacing: -0.04em;
+}
+
+.hero-name { font-family: 'Playfair Display', serif; font-size: clamp(52px, 7vw, 92px); font-weight: 900; line-height: 0.93; letter-spacing: -0.025em; }
+.hero-name em { font-style: italic; color: var(--red); }
+.hero-sub { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-top: 20px; line-height: 2.2; }
+
+.h-statement { font-family: 'Playfair Display', serif; font-size: clamp(17px, 2vw, 23px); font-style: italic; color: var(--cream); line-height: 1.55; position: relative; z-index: 2; }
+.h-statement strong { font-style: normal; color: var(--gold); }
+
+.h-derives {
+  margin-top: 36px; padding-top: 32px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 0; position: relative; z-index: 2;
+}
+.h-derive { padding-right: 20px; border-right: 1px solid rgba(255,255,255,0.08); padding-left: 0; }
+.h-derive:first-child { padding-left: 0; }
+.h-derive:last-child { border-right: none; padding-left: 20px; }
+.h-derive:nth-child(2) { padding-left: 20px; }
+.h-derive-label { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 5px; }
+.h-derive-desc { font-size: 11px; color: rgba(245,240,232,0.38); line-height: 1.6; }
+
+/* fade in */
+@keyframes up { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+.fu { opacity:1; }
+.fu:nth-child(1){animation-delay:.08s} .fu:nth-child(2){animation-delay:.2s} .fu:nth-child(3){animation-delay:.34s} .fu:nth-child(4){animation-delay:.48s}
+
+/* scroll reveal */
+.reveal { opacity:1; transform:translateY(0); }
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+/* ── STATS ROW ── */
+.stats { display: flex; gap: 48px; flex-wrap: wrap; margin-top: 44px; padding-top: 44px; border-top: 1px solid rgba(255,255,255,0.07); }
+.stat-n { font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 900; color: var(--gold); line-height: 1; }
+.stat-l { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(245,240,232,0.3); margin-top: 4px; }
+
+/* ── EMBED VIEWER ── */
+.embed-viewer { border: 1px solid rgba(255,255,255,0.08); margin-top: 48px; }
+.embed-tabs { display: flex; border-bottom: 1px solid rgba(255,255,255,0.08); overflow-x: auto; }
+.etab { padding: 13px 22px; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(245,240,232,0.35); cursor: pointer; border: none; background: transparent; white-space: nowrap; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all 0.2s; }
+.etab:hover { color: var(--cream); }
+.etab.active { color: var(--gold); border-bottom-color: var(--gold); }
+.epane { display: none; min-height: 420px; align-items: center; justify-content: center; }
+.epane.active { display: flex; }
+.epane iframe { width: 100%; height: 420px; border: none; }
+
+/* ── SLIDE GALLERY ── */
+.gallery-wrap { position: relative; overflow: hidden; }
+.slides-track { display: flex; transition: transform 0.4s ease; }
+.slide { min-width: 100%; display: grid; grid-template-columns: 1fr 1fr; }
+.slide-text { padding: 32px 40px; border-right: 1px solid var(--border); }
+.slide-code { padding: 32px 40px; background: var(--warm); }
+.slide-ph { min-width: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 10px; padding: 56px; text-align: center; }
+.snav { position: absolute; top: 50%; transform: translateY(-50%); background: var(--ink); color: var(--cream); border: none; width: 36px; height: 36px; font-size: 14px; cursor: pointer; z-index: 10; transition: opacity 0.2s; }
+.snav:hover { opacity: 0.7; }
+.snav.prev { left: 10px; } .snav.next { right: 10px; }
+.sdots { display: flex; gap: 7px; padding: 16px; justify-content: center; }
+.dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border); cursor: pointer; transition: background 0.2s; }
+.dot.active { background: var(--red); }
+
+.guide-code { background: var(--ink); border-radius: 3px; padding: 20px; font-family: 'DM Mono', monospace; font-size: 11px; color: #7dd3a8; line-height: 1.85; height: 190px; overflow-y: auto; }
+.guide-code .cm { color: #4b5563; } .guide-code .kw { color: #c084fc; } .guide-code .st { color: #fbbf24; }
+
+/* ── EVENTS ── */
+.ev-col-header { padding: 32px 32px 24px; border-bottom: 1px solid var(--border); }
+.ev-item { display: grid; grid-template-columns: 68px 1fr; gap: 14px; padding: 22px 32px; border-bottom: 1px solid var(--border); text-decoration: none; color: inherit; transition: background 0.2s; align-items: start; }
+.ev-item:last-child { border-bottom: none; }
+.ev-item:hover { background: rgba(201,52,26,0.04); }
+.ev-date { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); padding-top: 2px; }
+.ev-name { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; margin-bottom: 2px; line-height: 1.2; }
+.ev-loc { font-size: 12px; color: var(--muted); }
+
+/* ── FOOTER ── */
+footer { background: var(--ink); color: var(--cream); padding: 72px 56px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: end; }
+.foot-name { font-family: 'Playfair Display', serif; font-size: clamp(36px, 5vw, 64px); font-weight: 900; line-height: 0.95; letter-spacing: -0.02em; }
+.foot-name em { font-style: italic; color: var(--red); }
+.foot-links { display: flex; flex-direction: column; gap: 12px; align-self: center; }
+.foot-link { display: flex; align-items: center; gap: 12px; text-decoration: none; color: rgba(245,240,232,0.4); font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.07em; transition: color 0.2s; }
+.foot-link:hover { color: var(--cream); }
+.foot-link::before { content: '→'; color: var(--red); }
+
+@media (max-width: 860px) {
+  header, .grid-2, .grid-3, .grid-4, .grid-2-dark, .grid-3-dark, .grid-4-dark, footer { grid-template-columns: 1fr; }
+  .card.span2, .card-dark.span2, .card.span3 { grid-column: span 1; }
+  .slide { grid-template-columns: 1fr; }
+  .h-derives { grid-template-columns: 1fr; gap: 16px; }
+  .h-derive { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); padding: 0 0 16px; }
+  .h-derive:last-child { border-bottom: none; }
+  .inner, .h-left, .h-right { padding: 44px 24px; }
+  .stats { gap: 28px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header>
+  <div class="h-left">
+    <nav class="fu">
+      <a href="#research">Research</a>
+      <a href="#industry">Industry</a>
+      <a href="#events">Events</a>
+      <a href="#coursework">Coursework</a>
+      <a href="#teaching">Teaching</a>
+      <a href="#world">World</a>
+    </nav>
+
+    <div>
+      <h1 class="hero-name fu">Ishita<br><em>Gupta</em></h1>
+      <p class="hero-sub fu">BS + MS · Stanford CS · Expected Jun 2026</p>
+    </div>
+
+
+  </div>
+
+  <div class="h-right">
+    <p class="h-statement">
+      "I am interested in <strong>human learning.</strong> Human learning makes me interested in <strong>machine learning.</strong> Everything I do flows from that curiosity."
+    </p>
+    <div class="h-derives">
+      <div class="h-derive">
+        <div class="h-derive-label">Research</div>
+        <div class="h-derive-desc">Studying how people learn with AI — published, deployed, real</div>
+      </div>
+      <div class="h-derive">
+        <div class="h-derive-label">Teaching</div>
+        <div class="h-derive-desc">Doing it directly at Stanford, from embedded systems to AI agents</div>
+      </div>
+      <div class="h-derive">
+        <div class="h-derive-label">Events</div>
+        <div class="h-derive-desc">Building the community around it — Paris, NYC, Stanford</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="divider"></div>
+
+<!-- ══ RESEARCH ══ -->
+<section id="research" style="background:var(--ink);color:var(--cream);">
+  <div class="inner">
+    <div class="sec-label" style="color:var(--gold);">01 — Research</div>
+    <h2 class="sec-title" style="color:var(--cream);">Studying how<br>people learn<br><em style="font-style:italic;color:var(--gold);">with AI.</em></h2>
+
+    <!-- Core belief -->
+    <div style="margin-bottom:48px;max-width:660px;">
+      <p style="font-size:14px;color:rgba(245,240,232,0.55);line-height:1.9;">
+        I believe that education — and the decisions we make around it — is what shapes the future, for better and for worse. Technology is the best tool we have to bring high quality education to everyone. Which is why I am a computer scientist who researches education. My work has been published at the <a href="https://dl.acm.org/doi/10.1145/3641555.3705144" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(200,150,62,0.4);">SIGCSE Technical Symposium</a>, my research is funded by a <a href="https://acceleratelearning.stanford.edu/funding/create-ai-challenge/" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(200,150,62,0.4);">Google grant</a>, and I've written about it in the <a href="https://www.ft.com/content/3d4ab492-56f4-11e9-91f9-b6515a54c5b1" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(200,150,62,0.4);">Financial Times</a> and spoken about it with the <a href="https://www.youtube.com/watch?v=EXJu3KRY3so" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(200,150,62,0.4);">World Bank</a>.
+      </p>
+
+      <!-- Expand toggle -->
+      <button onclick="var d=document.getElementById('research-detail');var b=this;if(d.style.display==='none'){d.style.display='block';b.textContent='Hide detail ↑'}else{d.style.display='none';b.textContent='Read more about my research ↓'}"
+        style="margin-top:16px;background:none;border:1px solid rgba(200,150,62,0.4);color:var(--gold);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;padding:8px 16px;cursor:pointer;transition:background 0.2s;"
+        onmouseover="this.style.background='rgba(200,150,62,0.08)'" onmouseout="this.style.background='none'">
+        Read more about my research ↓
+      </button>
+    </div>
+
+    <!-- Research detail (collapsed) -->
+    <div id="research-detail" style="display:none;margin-bottom:40px;">
+
+    <!-- Curis origin story -->
+    <div style="border:1px solid rgba(255,255,255,0.08);padding:40px;margin-bottom:1px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;">
+        <div>
+          <div class="card-tag-gold" style="margin-bottom:12px;">Curis Fellowship · Stanford · Junior Year</div>
+          <div style="font-size:13px;color:rgba(245,240,232,0.55);line-height:1.9;">In my junior year, I was fortunate enough to be awarded the <a href="https://curis.stanford.edu" target="_blank" style="color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(200,150,62,0.4);">Curis Fellowship</a> to research whatever I wanted. I wrote about how <a href="https://arxiv.org/abs/2304.03442" target="_blank" style="color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(200,150,62,0.4);">Park et al.'s generative agents paper</a> could be used to accelerate social science research — simulating low-income classrooms in India and testing educational interventions computationally before deploying them in the real world.<br><br>That was the seed. From there I explored automated grading, then AI scaffolding for open-ended coding projects, which led to Coding Pathfinder, then the honors thesis, and ultimately the <a href="https://acceleratelearning.stanford.edu/funding/create-ai-challenge/" target="_blank" style="color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(200,150,62,0.4);">Stanford Create+AI Challenge grant</a> — funded by Google and the Stanford Graduate School of Education.</div>
+          <div style="display:flex;gap:14px;margin-top:20px;flex-wrap:wrap;">
+            <a href="https://arxiv.org/abs/2304.03442" target="_blank" class="card-link-gold">Generative Agents paper →</a>
+            <a href="https://acceleratelearning.stanford.edu/funding/create-ai-challenge/" target="_blank" class="card-link-gold">Create+AI Challenge →</a>
+
+          </div>
+        </div>
+        <div>
+          <div class="card-tag-gold" style="margin-bottom:14px;">Advisors</div>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:28px;">
+            <a href="https://piechlab.stanford.edu" target="_blank" style="text-decoration:none;padding:12px 16px;border:1px solid rgba(255,255,255,0.08);display:block;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.04)'" onmouseout="this.style.background='transparent'">
+              <div style="font-size:13px;font-weight:500;color:var(--cream);">Chris Piech</div>
+              <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(245,240,232,0.3);margin-top:2px;">Stanford Piech Lab</div>
+            </a>
+            <a href="https://profiles.stanford.edu/john-mitchell" target="_blank" style="text-decoration:none;padding:12px 16px;border:1px solid rgba(255,255,255,0.08);display:block;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.04)'" onmouseout="this.style.background='transparent'">
+              <div style="font-size:13px;font-weight:500;color:var(--cream);">John Mitchell</div>
+              <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(245,240,232,0.3);margin-top:2px;">Stanford CS</div>
+            </a>
+            <a href="https://sierrawang.github.io" target="_blank" style="text-decoration:none;padding:12px 16px;border:1px solid rgba(255,255,255,0.08);display:block;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.04)'" onmouseout="this.style.background='transparent'">
+              <div style="font-size:13px;font-weight:500;color:var(--cream);">Sierra Wang</div>
+              <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(245,240,232,0.3);margin-top:2px;">PhD Advisor</div>
+            </a>
+          </div>
+          <div class="card-tag-gold" style="margin-bottom:10px;">Curis Application Essay</div>
+          <a href="https://docs.google.com/document/d/1-4FazncFRDwClG4Z3nE-7fI6IrlSfLelb7bBHzBiED8/edit" target="_blank" style="text-decoration:none;padding:12px 16px;border:1px solid rgba(255,255,255,0.08);display:block;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.04)'" onmouseout="this.style.background='transparent'">
+            <div style="font-size:13px;color:var(--cream);">Read the original proposal</div>
+            <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(245,240,232,0.3);margin-top:2px;">Google Docs →</div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paper + Thesis + Grant -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-bottom:1px;">
+      <div class="card-dark">
+        <div class="card-tag-gold">SIGCSE 2025 · ACM · 1,221 downloads</div>
+        <div class="card-title" style="color:var(--cream);">Coding Pathfinder: A Platform for Creative, Self-Guided Mastery in Programming</div>
+        <div class="card-meta-dark">Ishita Gupta, Maya Bridgman, Sierra Wang, John Mitchell</div>
+        <div class="card-desc-dark" style="margin-top:8px;">Published at the 56th ACM Technical Symposium on Computer Science Education. Deployed inside Stanford's Code in Place — 7,441 students, 79,520 messages.</div>
+        <a class="card-link-gold" href="https://dl.acm.org/doi/10.1145/3641555.3705144" target="_blank" rel="noopener" style="margin-top:18px;display:inline-flex;">Read on ACM →</a>
+      </div>
+      <div class="card-dark">
+        <div class="card-tag-gold">Honors Thesis Presentation</div>
+        <div class="card-title" style="color:var(--cream);">Teaching Code with a Sidekick: How Code in Place Students Use AI for Projects</div>
+        <div class="card-meta-dark">Stanford · Code in Place · 40,000 students</div>
+        <div class="card-desc-dark" style="margin-top:8px;">The full research — multi-agent prompting architecture, deployment at scale, and what 79,520 messages taught us about how students actually learn with AI.</div>
+        <a class="card-link-gold" href="https://www.canva.com/design/DAG-gh4s9bE/OYO4BR-rHo2cq_vnm5YkDQ/edit" target="_blank" rel="noopener" style="margin-top:18px;display:inline-flex;">View presentation →</a>
+      </div>
+      <div class="card-dark">
+        <div class="card-tag-gold">Stanford Create+AI Challenge · $25,000</div>
+        <div class="card-title" style="color:var(--cream);">Grant for Graduate Research in AI Education</div>
+        <div class="card-meta-dark">Funded by Google · Stanford Graduate School of Education</div>
+        <div class="card-desc-dark" style="margin-top:8px;">Awarded to support continued research in AI-assisted learning — building on Coding Pathfinder and the honors thesis work.</div>
+        <a class="card-link-gold" href="https://acceleratelearning.stanford.edu/funding/create-ai-challenge/" target="_blank" rel="noopener" style="margin-top:18px;display:inline-flex;">About the grant →</a>
+      </div>
+    </div>
+
+    <!-- Stats (inside read more) -->
+    <div class="stats" style="border-top:1px solid rgba(255,255,255,0.07);padding-top:40px;margin-top:40px;">
+      <div><div class="stat-n">7,441</div><div class="stat-l">Students reached</div></div>
+      <div><div class="stat-n">$25k</div><div class="stat-l">Stanford Create+AI grant</div></div>
+    </div>
+
+      <!-- Closer inside read more -->
+      <div style="margin-top:40px;padding:36px 40px;border:1px solid rgba(200,150,62,0.2);background:rgba(200,150,62,0.04);">
+        <div style="font-family:'Playfair Display',serif;font-size:clamp(18px,2.5vw,28px);font-style:italic;color:var(--gold);line-height:1.5;">"Some changes lie not in the distant future, but in the decisions we make now."</div>
+        <div style="font-size:13px;color:rgba(245,240,232,0.4);line-height:1.8;margin-top:14px;max-width:560px;">Education is how you change the world. That's why I research it, teach it, and build communities around it.</div>
+      </div>
+
+    </div><!-- /research-detail -->
+
+  </div>
+</section>
+
+<div class="divider-dark"></div>
+
+<!-- ══ INDUSTRY ══ -->
+<section id="industry" style="background:var(--cream);">
+  <div class="inner">
+    <div class="sec-label">02 — Industry</div>
+    <h2 class="sec-title">Where research<br><em style="font-style:italic;color:var(--red);">meets practice.</em></h2>
+    <p class="sec-sub">Nine months at Snowflake building AI agent infrastructure — while co-teaching a joint Stanford–Snowflake course on trustworthy AI agents.</p>
+
+    <!-- Snowflake full width -->
+    <div class="card" style="padding:36px 40px;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:24px;">
+        <div>
+          <div class="card-tag">Apr 2025 – Present · 9 months</div>
+          <div class="card-title-lg">Snowflake</div>
+          <div class="card-meta">ML Research Intern — Agent Observability</div>
+          <div class="card-desc" style="margin-top:10px;max-width:640px;">MCP-based evaluation frameworks for AI agents. RAG and text-to-SQL search over enterprise data. Research feeds directly into Snowflake's AI product roadmap.<br><br>Also co-taught <a href="https://web.stanford.edu/class/cs329t/" target="_blank" rel="noopener" style="color:var(--red);text-decoration:none;border-bottom:1px solid rgba(201,52,26,0.3);">CS329T "Building Trustworthy AI Agents"</a> — a joint Stanford–Snowflake course with John Mitchell and Anupam Datta.</div>
+        </div>
+        <div style="min-width:64px;height:64px;background:#29B5E8;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg viewBox="0 0 40 40" width="32" height="32" fill="white"><path d="M20 4L27 16H13L20 4ZM20 36L13 24H27L20 36ZM4 20L16 13V27L4 20ZM36 20L24 27V13L36 20Z"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ EVENTS ══ -->
+<section id="events" style="background:var(--ink);color:var(--cream);">
+  <div class="inner">
+    <div class="sec-label" style="color:var(--gold);">03 — Events</div>
+    <h2 class="sec-title" style="color:var(--cream);">Machines need<br>to meet<br><em style="font-style:italic;color:var(--gold);">humans.</em></h2>
+    <p class="sec-sub" style="color:rgba(245,240,232,0.55);">Most AI events are developers talking to developers. I wanted to put filmmakers, educators, artists, and engineers in the same room — in Paris, New York, Stanford. That's what Ars Machina is.</p>
+
+    <div style="border:1px solid rgba(255,255,255,0.08);padding:40px;">
+
+
+      <!-- Logo grid -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.07);margin-bottom:2px;">
+
+        <a href="https://worldwide-hackathon.mistral.ai" target="_blank" rel="noopener" style="text-decoration:none;background:var(--ink);padding:24px 20px;transition:background 0.2s;" onmouseover="this.style.background='#161513'" onmouseout="this.style.background='var(--ink)'">
+          <div style="width:36px;height:36px;background:#1a1a1a;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:12px;">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none">
+              <rect x="2" y="4" width="3" height="3" fill="#FF1500"/><rect x="2" y="7" width="3" height="3" fill="#FF4500"/><rect x="2" y="10" width="3" height="3" fill="#FF6600"/><rect x="2" y="13" width="3" height="3" fill="#FF8800"/><rect x="2" y="16" width="3" height="3" fill="#FFB000"/>
+              <rect x="5" y="7" width="3" height="3" fill="#FF6600"/><rect x="8" y="10" width="3" height="3" fill="#FF8800"/><rect x="11" y="7" width="3" height="3" fill="#FF6600"/><rect x="14" y="10" width="3" height="3" fill="#FF8800"/><rect x="17" y="7" width="3" height="3" fill="#FF6600"/>
+              <rect x="19" y="4" width="3" height="3" fill="#FF1500"/><rect x="19" y="7" width="3" height="3" fill="#FF4500"/><rect x="19" y="10" width="3" height="3" fill="#FF6600"/><rect x="19" y="13" width="3" height="3" fill="#FF8800"/><rect x="19" y="16" width="3" height="3" fill="#FFB000"/>
+            </svg>
+          </div>
+          <div style="font-size:11px;font-family:'DM Mono',monospace;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">NYC</div>
+          <div style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--cream);margin-bottom:4px;">Mistral AI</div>
+          <div class="card-desc-dark">Organised the NYC edition of the worldwide hackathon</div>
+        </a>
+
+        <a href="https://forgefilmfest.netlify.app" target="_blank" rel="noopener" style="text-decoration:none;background:#111010;padding:24px 20px;transition:background 0.2s;" onmouseover="this.style.background='#1a1918'" onmouseout="this.style.background='#111010'">
+          <div style="width:36px;height:36px;background:#1a1a1a;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:12px;">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
+              <path d="M5 4h8c2.2 0 4 1.8 4 4s-1.8 4-4 4H5V4z" fill="white"/>
+              <path d="M5 12h5l4 8H9l-4-8z" fill="white"/>
+              <rect x="5" y="4" width="2.5" height="16" fill="white"/>
+            </svg>
+          </div>
+          <div style="font-size:11px;font-family:'DM Mono',monospace;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Paris</div>
+          <div style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--cream);margin-bottom:4px;">Runway ML</div>
+          <div class="card-desc-dark">Designed and organised France's first AI film festival</div>
+        </a>
+
+        <a href="https://forgefilmfest.netlify.app" target="_blank" rel="noopener" style="text-decoration:none;background:var(--ink);padding:24px 20px;transition:background 0.2s;" onmouseover="this.style.background='#161513'" onmouseout="this.style.background='var(--ink)'">
+          <div style="width:36px;height:36px;background:#1a1a1a;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:12px;">
+            <span style="font-family:'Playfair Display',serif;font-weight:700;font-size:14px;color:#c8963e;">G</span>
+          </div>
+          <div style="font-size:11px;font-family:'DM Mono',monospace;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Paris</div>
+          <div style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--cream);margin-bottom:4px;">École Georges Méliès</div>
+          <div class="card-desc-dark">FORGE — birthplace of cinema</div>
+        </a>
+
+        <a href="https://artthinkingnetwork.com/improbable-stanford" target="_blank" rel="noopener" style="text-decoration:none;background:#111010;padding:24px 20px;transition:background 0.2s;" onmouseover="this.style.background='#1a1918'" onmouseout="this.style.background='#111010'">
+          <div style="width:36px;height:36px;background:#1a1a1a;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:12px;position:relative;">
+            <span style="font-family:'Playfair Display',serif;font-weight:700;font-size:18px;color:white;line-height:1;">d</span>
+            <div style="width:8px;height:8px;background:#c9341a;border-radius:50%;position:absolute;bottom:6px;right:6px;"></div>
+          </div>
+          <div style="font-size:11px;font-family:'DM Mono',monospace;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Palo Alto, California</div>
+          <div style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--cream);margin-bottom:4px;">Stanford d.school</div>
+          <div class="card-desc-dark">Improbable Stanford</div>
+        </a>
+
+        <a href="https://escp.eu/events/ai-higher-education-summit-2026-paris-17-18-march" target="_blank" rel="noopener" style="text-decoration:none;background:var(--ink);padding:24px 20px;transition:background 0.2s;" onmouseover="this.style.background='#161513'" onmouseout="this.style.background='var(--ink)'">
+          <div style="width:36px;height:36px;background:#1a1a6e;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:12px;">
+            <span style="font-family:'DM Mono',monospace;font-weight:700;font-size:9px;color:white;letter-spacing:0.02em;">ESCP</span>
+          </div>
+          <div style="font-size:11px;font-family:'DM Mono',monospace;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Paris</div>
+          <div style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--cream);margin-bottom:4px;">ESCP Paris</div>
+          <div class="card-desc-dark">AI in Higher Education Summit 2026</div>
+        </a>
+
+        <a href="https://hackathon.friendsandfam.xyz" target="_blank" rel="noopener" style="text-decoration:none;background:#111010;padding:24px 20px;transition:background 0.2s;" onmouseover="this.style.background='#1a1918'" onmouseout="this.style.background='#111010'">
+          <div style="width:36px;height:36px;background:#1a1a1a;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:12px;">
+            <span style="font-family:'DM Mono',monospace;font-weight:700;font-size:11px;color:white;">D</span>
+          </div>
+          <div style="font-size:11px;font-family:'DM Mono',monospace;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">San Francisco</div>
+          <div style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--cream);margin-bottom:4px;">Delve</div>
+          <div class="card-desc-dark">Hackathon</div>
+        </a>
+
+        <a href="https://posh.vip/e/escape-velocity" target="_blank" rel="noopener" style="text-decoration:none;background:var(--ink);padding:24px 20px;transition:background 0.2s;" onmouseover="this.style.background='#161513'" onmouseout="this.style.background='var(--ink)'">
+          <div style="width:36px;height:36px;background:#c9341a;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:12px;">
+            <span style="font-family:'DM Mono',monospace;font-weight:700;font-size:9px;color:white;letter-spacing:-0.02em;">SEQ</span>
+          </div>
+          <div style="font-size:11px;font-family:'DM Mono',monospace;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">NYC</div>
+          <div style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--cream);margin-bottom:4px;">Sequoia Capital</div>
+          <div class="card-desc-dark">Buildathon, with James Buckhouse</div>
+        </a>
+
+        <a href="https://posh.vip/e/escape-velocity" target="_blank" rel="noopener" style="text-decoration:none;background:#111010;padding:24px 20px;transition:background 0.2s;" onmouseover="this.style.background='#1a1918'" onmouseout="this.style.background='#111010'">
+          <div style="width:36px;height:36px;background:#272725;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:12px;">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
+              <path d="M12 20s-8-5.5-8-11a5 5 0 0 1 8-4 5 5 0 0 1 8 4c0 5.5-8 11-8 11z" fill="#1E52F1"/>
+              <path d="M12 20s-8-5.5-8-11a5 5 0 0 1 8-4" fill="#F3702F" opacity="0.7"/>
+            </svg>
+          </div>
+          <div style="font-size:11px;font-family:'DM Mono',monospace;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">NYC</div>
+          <div style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--cream);margin-bottom:4px;">Lovable</div>
+          <div class="card-desc-dark">Buildathon partner</div>
+        </a>
+
+      </div>
+
+      <!-- Stats bar -->
+      <div style="display:flex;gap:48px;flex-wrap:wrap;padding-top:28px;border-top:1px solid rgba(255,255,255,0.07);">
+        <div><div style="font-family:'Playfair Display',serif;font-size:36px;font-weight:900;color:var(--gold);line-height:1;">6</div><div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(245,240,232,0.3);margin-top:4px;">Events</div></div>
+        <div><div style="font-family:'Playfair Display',serif;font-size:36px;font-weight:900;color:var(--gold);line-height:1;">780</div><div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(245,240,232,0.3);margin-top:4px;">People reached</div></div>
+        <div><div style="font-family:'Playfair Display',serif;font-size:36px;font-weight:900;color:var(--gold);line-height:1;">15+</div><div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(245,240,232,0.3);margin-top:4px;">Partners</div></div>
+        <div><div style="font-family:'Playfair Display',serif;font-size:36px;font-weight:900;color:var(--gold);line-height:1;">3</div><div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(245,240,232,0.3);margin-top:4px;">Cities</div></div>
+        <div><div style="font-family:'Playfair Display',serif;font-size:36px;font-weight:900;color:var(--gold);line-height:1;">2</div><div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(245,240,232,0.3);margin-top:4px;">Continents</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ COURSEWORK ══ -->
+<section id="coursework" style="background:var(--ink);color:var(--cream);">
+  <div class="inner">
+    <div class="sec-label" style="color:var(--gold);">04 — Coursework</div>
+    <h2 class="sec-title" style="color:var(--cream);">Full-stack<br>technical<br><em style="font-style:italic;color:var(--gold);">foundation.</em></h2>
+
+    <div style="max-width:660px;margin-bottom:48px;">
+      <p style="font-size:14px;color:rgba(245,240,232,0.55);line-height:1.9;">
+        I completed my undergraduate on the <strong style="color:var(--cream);">operating systems track</strong> — systems, compilers, graphics, security, parallel computing, and a full mathematics minor. I'm now pursuing my <strong style="color:var(--cream);">Master's in AI</strong> at Stanford.<br><br>
+        I believe in learning for mastery, not for grades. Technical depth was the whole point of my undergrad — I wanted to actually understand what's underneath the frameworks everyone else uses. That showed up in a <strong style="color:var(--gold);">3.7 GPA</strong>, but more importantly in the kind of work I can do.
+      </p>
+
+      <button onclick="var d=document.getElementById('coursework-detail');var b=this;if(d.style.display==='none'){d.style.display='block';b.textContent='Hide courses ↑'}else{d.style.display='none';b.textContent='See courses ↓'}"
+        style="margin-top:20px;background:none;border:1px solid rgba(200,150,62,0.4);color:var(--gold);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;padding:8px 16px;cursor:pointer;transition:background 0.2s;"
+        onmouseover="this.style.background='rgba(200,150,62,0.08)'" onmouseout="this.style.background='none'">
+        See courses ↓
+      </button>
+    </div>
+
+    <!-- Course detail (collapsed) -->
+    <div id="coursework-detail" style="display:none;margin-bottom:40px;">
+      <div class="grid-3-dark reveal">
+        <div class="card-dark">
+          <div class="card-tag-gold">Embedded Systems</div>
+          <div style="display:flex;flex-direction:column;gap:20px;margin-top:4px;">
+            <div>
+              <div class="card-title" style="color:var(--cream);font-size:16px;">CS 107e</div>
+              <div class="card-meta-dark">Computer Systems from the Ground Up</div>
+              <div class="card-desc-dark">Bare-metal ARM — no OS, no abstractions. GPIO, interrupts, memory-mapped I/O. Also TA'd this course.</div>
+            </div>
+            <div>
+              <div class="card-title" style="color:var(--cream);font-size:16px;">CS 140e</div>
+              <div class="card-meta-dark">Operating Systems Design &amp; Implementation</div>
+              <div class="card-desc-dark">Build a real OS from scratch on a Raspberry Pi. One of the hardest courses in the Stanford CS curriculum.</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-dark">
+          <div class="card-tag-gold">Systems &amp; Languages</div>
+          <div style="display:flex;flex-direction:column;gap:20px;margin-top:4px;">
+            <div>
+              <div class="card-title" style="color:var(--cream);font-size:16px;">CS 149</div>
+              <div class="card-meta-dark">Parallel Computing</div>
+              <div class="card-desc-dark">GPU programming, CUDA, SIMD, cache coherence. How modern hardware achieves performance at scale.</div>
+            </div>
+            <div>
+              <div class="card-title" style="color:var(--cream);font-size:16px;">CS 143</div>
+              <div class="card-meta-dark">Compilers</div>
+              <div class="card-desc-dark">Lexing, parsing, semantic analysis, code generation. Build a compiler end-to-end.</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-dark">
+          <div class="card-tag-gold">Graphics</div>
+          <div style="display:flex;flex-direction:column;gap:20px;margin-top:4px;">
+            <div>
+              <div class="card-title" style="color:var(--cream);font-size:16px;">CS 148</div>
+              <div class="card-meta-dark">Intro to Computer Graphics &amp; Imaging</div>
+              <div class="card-desc-dark">Ray tracing, rendering pipelines, shading, rasterisation.</div>
+            </div>
+            <div>
+              <div class="card-title" style="color:var(--cream);font-size:16px;">CS 248A</div>
+              <div class="card-meta-dark">Computer Graphics: Image Synthesis</div>
+              <div class="card-desc-dark">Monte Carlo rendering, global illumination, physically-based shading. Heavy C++ and linear algebra.</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-dark">
+          <div class="card-tag-gold">Security</div>
+          <div style="margin-top:4px;">
+            <div class="card-title" style="color:var(--cream);font-size:16px;">CS 155</div>
+            <div class="card-meta-dark">Computer and Network Security</div>
+            <div class="card-desc-dark">Cryptography, web security, OS security, software vulnerabilities. Taught by Dan Boneh and John Mitchell.</div>
+          </div>
+        </div>
+        <div class="card-dark">
+          <div class="card-tag-gold">Mathematics Minor</div>
+          <div style="margin-top:4px;">
+            <div class="card-title" style="color:var(--cream);font-size:16px;">Math 104 + Minor</div>
+            <div class="card-meta-dark">Applied Matrix Theory &amp; full minor</div>
+            <div class="card-desc-dark">SVD, eigendecomposition, matrix factorisation, least squares. Analysis, discrete maths, probability theory.</div>
+          </div>
+        </div>
+        <div class="card-dark">
+          <div class="card-tag-gold">Why it matters</div>
+          <div style="font-size:13px;color:rgba(245,240,232,0.45);line-height:1.85;margin-top:4px;">
+            Most AI practitioners work at the framework level. I know what's underneath.<br><br>
+            Compilers → model optimisation for hardware<br>
+            Parallel computing → training at scale<br>
+            Graphics → generative visual AI<br>
+            Security → how AI systems get attacked<br>
+            Embedded → AI at the edge
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider-dark"></div>
+
+<!-- ══ TEACHING ══ -->
+<section id="teaching" style="background:var(--cream);">
+  <div class="inner">
+    <div class="sec-label">05 — Teaching</div>
+    <h2 class="sec-title">Teaching it<br><em style="font-style:italic;color:var(--red);">directly.</em></h2>
+    <p class="sec-sub">From bare-metal embedded systems to building AI agents. I teach across the full stack and I make hard things click.</p>
+
+    <div class="grid-2 reveal" style="margin-bottom:2px;">
+      <div class="card">
+        <div class="card-tag">CS 329T</div>
+        <div class="card-title">Building Trustworthy AI Agents</div>
+        <div class="card-meta">Stanford · Joint with Snowflake · 2025–Present · Paid by both</div>
+        <div class="card-desc">Graduate course on building and evaluating agentic AI systems with John Mitchell and Anupam Datta. I organised speakers, helped students build real agent projects, ran office hours, graded work.</div>
+        <a class="card-link" href="https://cs329t.stanford.edu" target="_blank">View course →</a>
+      </div>
+      <div class="card warm">
+        <div class="card-tag">CS 107e</div>
+        <div class="card-title">Computer Systems from the Ground Up</div>
+        <div class="card-meta">Stanford · TA · 2023–2025</div>
+        <div class="card-desc">Bare-metal embedded systems. I made visual learning guides to make low-level concepts click — GPIO pins, heap allocation, memory-mapped I/O. 75% attendance at optional sections.</div>
+      </div>
+    </div>
+
+    <!-- CS107e slide gallery -->
+    <div class="reveal" style="border:1px solid var(--border);">
+      <div style="padding:32px 40px 24px;border-bottom:1px solid var(--border);">
+        <div class="card-tag">CS 107e — Visual Guides</div>
+        <div style="font-size:13px;color:var(--muted);">Scroll through the learning guides I made for the course →</div>
+      </div>
+      <div class="gallery-wrap">
+        <div class="slides-track" id="slidesTrack">
+          <div class="slide" style="min-width:100%;display:block;">
+            <div style="padding:24px 32px 16px;border-bottom:1px solid var(--border);display:flex;align-items:baseline;gap:16px;">
+              <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--red);">Guide 01</div>
+              <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;">Meet Your GPIO Pins</div>
+              <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-left:auto;">CS 107e · MangoPi</div>
+            </div>
+            <iframe src="guide-01-meet-your-gpio-pins.pdf" style="width:100%;height:480px;border:none;display:block;" title="Meet Your GPIO Pins — CS 107e guide"></iframe>
+          </div>
+          <div class="slide" style="min-width:100%;display:block;">
+            <div style="padding:24px 32px 16px;border-bottom:1px solid var(--border);display:flex;align-items:baseline;gap:16px;">
+              <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--red);">Guide 02</div>
+              <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;">Program Your GPIO Pins</div>
+              <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-left:auto;">CS 107e · MangoPi</div>
+            </div>
+            <iframe src="guide-02-program-your-gpio-pins.pdf" style="width:100%;height:480px;border:none;display:block;" title="Program Your GPIO Pins — CS 107e guide"></iframe>
+          </div>
+          <div class="slide" style="min-width:100%;display:block;">
+            <div style="padding:24px 32px 16px;border-bottom:1px solid var(--border);display:flex;align-items:baseline;gap:16px;">
+              <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--red);">Guide 03</div>
+              <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;">Heap Allocator</div>
+              <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-left:auto;">CS 107e · Memory</div>
+            </div>
+            <iframe src="guide-03-heap-allocator.pdf" style="width:100%;height:480px;border:none;display:block;" title="Heap Allocator — CS 107e guide"></iframe>
+          </div>
+          <div class="slide" style="min-width:100%;display:block;">
+            <div style="padding:24px 32px 16px;border-bottom:1px solid var(--border);display:flex;align-items:baseline;gap:16px;">
+              <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--red);">Guide 04</div>
+              <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;">Page Tables</div>
+              <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-left:auto;">CS 107e · Virtual Memory</div>
+            </div>
+            <iframe src="guide-04-page-tables.pdf" style="width:100%;height:480px;border:none;display:block;" title="Page Tables — CS 107e guide"></iframe>
+          </div>
+          <div class="slide" style="min-width:100%;display:block;">
+            <div style="padding:24px 32px 16px;border-bottom:1px solid var(--border);display:flex;align-items:baseline;gap:16px;">
+              <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--red);">Guide 05</div>
+              <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;">TLB</div>
+              <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-left:auto;">CS 107e · Virtual Memory</div>
+            </div>
+            <iframe src="guide-05-tlb.pdf" style="width:100%;height:480px;border:none;display:block;" title="TLB — CS 107e guide"></iframe>
+          </div>
+        </div>
+        <button class="snav prev" onclick="slideNav(-1)">←</button>
+        <button class="snav next" onclick="slideNav(1)">→</button>
+      </div>
+      <div class="sdots" id="slideDots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ WORLD ══ -->
+<section id="world" style="background:var(--cream);">
+  <div class="inner">
+    <div class="sec-label">06 — World</div>
+    <h2 class="sec-title">Languages.</h2>
+    <p class="sec-sub">I have lived and worked in five countries. Whenever I move somewhere new, I try to engage with it at a local level — and to do that properly, you have to learn the language. It can feel hard, but it's one of the healthiest things you can do. It keeps your neuronal pathways alive.</p>
+
+    <div class="grid-4 reveal" style="margin-bottom:2px;">
+      <div class="card" style="padding:32px;">
+        <div style="font-size:20px;margin-bottom:12px;">🇮🇳</div>
+        <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:900;margin-bottom:6px;">Hindi</div>
+        <div class="card-tag" style="color:var(--red);">Native</div>
+      </div>
+      <div class="card warm" style="padding:32px;">
+        <div style="font-size:20px;margin-bottom:12px;">🇬🇧</div>
+        <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:900;margin-bottom:6px;">English</div>
+        <div class="card-tag" style="color:var(--red);">Native</div>
+      </div>
+      <div class="card" style="padding:32px;">
+        <div style="font-size:20px;margin-bottom:12px;">🇨🇳</div>
+        <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:900;margin-bottom:6px;">Mandarin</div>
+        <div class="card-tag" style="color:var(--red);">HSK 3 · Conversational</div>
+      </div>
+      <div class="card warm" style="padding:32px;">
+        <div style="font-size:20px;margin-bottom:12px;">🇪🇸</div>
+        <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:900;margin-bottom:6px;">Spanish</div>
+        <div class="card-tag" style="color:var(--red);">B2 · Upper Intermediate</div>
+      </div>
+      <div class="card" style="padding:32px;">
+        <div style="font-size:20px;margin-bottom:12px;">🇫🇷</div>
+        <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:900;margin-bottom:6px;">French</div>
+        <div class="card-tag" style="color:var(--red);">Beginner · Active immersion</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div>
+    <p style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,240,232,0.2);margin-bottom:14px;">Get in touch</p>
+    <div class="foot-name">Let's<br>build<br><em>things.</em></div>
+  </div>
+  <div class="foot-links">
+    <a class="foot-link" href="/cdn-cgi/l/email-protection#8be2f8e3e2eccbf8ffeae5ede4f9efa5eeeffe"><span class="__cf_email__" data-cfemail="0d647e65646a4d7e796c636b627f6923686978">[email&#160;protected]</span></a>
+    <a class="foot-link" href="https://github.com/ishi-gupta" target="_blank">github.com/ishi-gupta</a>
+    <a class="foot-link" href="https://forgefilmfest.netlify.app" target="_blank">FORGE Film Festival</a>
+    <a class="foot-link" href="https://artthinkingnetwork.com/ai-x-artistic-intelligence" target="_blank">Art Thinking Network</a>
+    <a class="foot-link" href="https://dl.acm.org/doi/10.1145/3641555.3705144" target="_blank">SIGCSE Paper</a>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// slide gallery
+let slideIdx = 0, TOTAL = 5;
+function slideNav(dir) {
+  slideIdx = (slideIdx + dir + TOTAL) % TOTAL;
+  document.getElementById('slidesTrack').style.transform = 'translateX(-' + (slideIdx * 100) + '%)';
+  document.querySelectorAll('#slideDots .dot').forEach((d,i) => d.classList.toggle('active', i === slideIdx));
+}
+
+// embed tabs
+function showTab(id) {
+  const ids = ['paper','poster','thesis','course'];
+  document.querySelectorAll('.etab').forEach((t,i) => t.classList.toggle('active', ids[i] === id));
+  document.querySelectorAll('.epane').forEach(p => p.classList.toggle('active', p.id === 'epane-' + id));
+}
+
+// scroll reveal
+const obs = new
