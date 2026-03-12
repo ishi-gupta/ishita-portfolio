@@ -396,6 +396,22 @@ footer { background: var(--ink); color: var(--cream); padding: 72px 56px; displa
     <h2 class="sec-title">Where research<br><em style="font-style:italic;color:var(--red);">meets practice.</em></h2>
     <p class="sec-sub">Nine months at Snowflake building AI agent infrastructure — while co-teaching a joint Stanford–Snowflake course on trustworthy AI agents.</p>
 
+    <button onclick="var d=document.getElementById('industry-story');var b=this;if(d.style.display==='none'){d.style.display='block';b.textContent='Hide ↑'}else{d.style.display='none';b.textContent='How I got here ↓'}"
+      style="margin-bottom:40px;background:none;border:1px solid rgba(201,52,26,0.4);color:var(--red);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;padding:8px 16px;cursor:pointer;transition:background 0.2s;"
+      onmouseover="this.style.background='rgba(201,52,26,0.06)'" onmouseout="this.style.background='none'">
+      How I got here ↓
+    </button>
+
+    <div id="industry-story" style="display:none;max-width:660px;margin-bottom:48px;">
+      <p style="font-size:14px;color:var(--muted);line-height:1.9;">
+        For my honors thesis, I built a tool to help students learn to code. To make it reliable — to ensure it stayed aligned with the curriculum and never just handed out answers — I had to make it observable. I built what I called a multimodal adaptive prompting system: a layered architecture where different prompts activated depending on where a student was stuck, what they'd already tried, and what the course expected of them.<br><br>
+        I didn't know it at the time, but what I'd built was an early AI agent.<br><br>
+        Snowflake was looking for a researcher for their AI agents and observability team. They read the thesis. They liked that it wasn't just a research idea — it was fully implemented, deployed, and tested on real students at scale. They interviewed me, and I became their youngest AI researcher.<br><br>
+        I spent the summer doing research. In the fall, I co-taught a course with them and my advisor. At the end, they offered to fund the rest of my Master's and offered me a full-time job.<br><br>
+        I turned it down. I wanted to work on education instead.
+      </p>
+    </div>
+
     <!-- Snowflake full width -->
     <div class="card" style="padding:36px 40px;">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:24px;">
